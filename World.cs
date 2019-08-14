@@ -6,7 +6,7 @@ public class World : MonoBehaviour
 {
 
     public Chunk chunk;
-    int loadSize = 8;
+    int loadSize = 32;
     int size = 64;
 
     // Start is called before the first frame update
@@ -40,14 +40,15 @@ public class worldNoise
         double max = 0;
         double amount = 1;
         double height = 0;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 10; i++)
         {
             height += ValueCoherentNoise3D(x / amount, z / amount, i, 0) * amount;
             max += amount;
             amount *= 2;
         }
         height /= max;
-        height = height < 0 ? height * 0.1 : height * height;
+        height -= 0.25f;
+        height = height < 0 ? height * 0.1 : height * height*height*0.5;
         height *= max;
         return (float)height;
     }
